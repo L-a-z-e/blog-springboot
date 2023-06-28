@@ -3,6 +3,7 @@ package blog.laze.controller;
 import blog.laze.domain.Article;
 import blog.laze.dto.AddArticleRequest;
 import blog.laze.dto.ArticleResponse;
+import blog.laze.dto.UpdateArticleRequest;
 import blog.laze.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,13 +38,30 @@ public class BlogApiController {
                 .body(articles);
 
     }
-
+@GetMapping("/api/articles/{id}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) {
 
         Article article = blogService.findById(id);
 
         return ResponseEntity.ok()
                 .body(new ArticleResponse(article));
+
+    }
+
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable long id){
+        blogService.delete(id);
+
+        return ResponseEntity.ok()
+                .build();
+    }
+
+    @PutMapping("/api/articles/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody UpdateArticleRequest request){
+        Article updatedArticle = blogService.update(id, request);
+
+        return ResponseEntity.ok()
+                .body(updatedArticle);
 
     }
 }
