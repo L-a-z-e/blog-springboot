@@ -2,6 +2,7 @@ package blog.laze.config;
 
 import blog.laze.config.jwt.TokenAuthenticationFilter;
 import blog.laze.config.jwt.TokenProvider;
+import blog.laze.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import blog.laze.config.oauth.OAuth2UserCustomService;
 import blog.laze.repository.RefreshTokenRepository;
 import blog.laze.service.UserService;
@@ -80,7 +81,7 @@ public class WebOAuthSecurityConfig {
     }
 
     @Bean
-    public OAuth2AuthorizationRequestBasedOnCookieRepository(){
+    public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository(){
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
