@@ -1,8 +1,8 @@
 package blog.laze.config;
 
-import blog.laze.config.jwt.TokenAuthenticationFilter;
 import blog.laze.config.jwt.TokenProvider;
 import blog.laze.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import blog.laze.config.oauth.OAuth2SuccessHandler;
 import blog.laze.config.oauth.OAuth2UserCustomService;
 import blog.laze.repository.RefreshTokenRepository;
 import blog.laze.service.UserService;
@@ -39,6 +39,7 @@ public class WebOAuthSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable()
+                .httpBasic().disable()
                 .formLogin().disable()
                 .logout().disable();
         http.sessionManagement()
@@ -54,7 +55,7 @@ public class WebOAuthSecurityConfig {
         http.oauth2Login()
                 .loginPage("/login")
                 .authorizationEndpoint()
-                .authorizationRequestRepository(OAuth2AuthorizationRequestBasedOnCookieRepository())
+                .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
                 .and()
                 .successHandler(oAuth2SuccessHandler())
                 .userInfoEndpoint()
@@ -70,7 +71,7 @@ public class WebOAuthSecurityConfig {
     }
 
     @Bean
-    public OAuth2SuccessHandler(){
+    public OAuth2SuccessHandler oAuth2SuccessHandler(){
         return new OAuth2SuccessHandler(tokenProvider, refreshTokenRepository, oAuth2AuthorizationRequestBasedOnCookieRepository(), userService);
     }
 

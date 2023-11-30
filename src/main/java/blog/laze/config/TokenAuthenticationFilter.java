@@ -1,5 +1,6 @@
-package blog.laze.config.jwt;
+package blog.laze.config;
 
+import blog.laze.config.jwt.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
